@@ -1,7 +1,6 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import OllamaEmbeddings, HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma, FAISS
-from config import OLLAMA_URL, MODEL_3_1_8B_Q4KM_GUFF
+from langchain_community.vectorstores import Chroma
 import os
 
 examples = {
@@ -10,7 +9,7 @@ examples = {
     "step_3": {"file_path": "rag/fullfilling_needs_examples.txt"},
     "step_4": {"file_path": "rag/isolation_examples.txt"},
     "step_5": {"file_path": "rag/sexualize_relationship_abuse_example.txt"},
-    "step_5": {"file_path": "rag/mantaining_control.txt"},
+    "step_6": {"file_path": "rag/isolation_examples.txt"},
 }
 
 

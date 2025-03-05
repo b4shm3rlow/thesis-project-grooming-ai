@@ -19,7 +19,7 @@ PHASES = {
     "step_6": {"name": "Maintaing control and Approach", "prompt": PROMPT_STEP_6, "description": MAINTAINING_CONTROL},
     }
 
-def gen_chat():
+def gen_chat_phase():
     '''response_g, response_v = gen_partecipant_profile(PROMPT_PROFILE_GROOMER, PROMPT_PROFILE_VICTIM)
     print(response_g)
     profile_g = json.loads(response_g)
@@ -33,24 +33,29 @@ def gen_chat():
 
     chat_file = "test_generation/chat_11.txt"
     gen_output = "test_generation/chat_11_output.txt"
-    step = "step_3"
+
+    step = "step_1"
     with open(chat_file, 'r', encoding='utf-8') as file:
         chat_log_history = get_last_lines(chat_file)
         print(f"chat_log_history: {chat_log_history}")
     
     response = gen_chat_as_step(prompt_step_template=PHASES[step]["prompt"], phase_name=PHASES[step]["name"], step_key=step, chat_log_history=chat_log_history, groomer_profile=desc_profile_g, victim_profile=desc_profile_v)
-    start_time = time.time()
     parse_to_txt(response, gen_output)
     chat = convert_json_to_string(response)
     parse_to_txt(chat, chat_file)
-    #chat_log = gen_chat_complete(phases=PHASES)
 
 
 if __name__ == "__main__":
     #step = "step_1"
     #response = gen_messages_phase(phase_name=PHASES[step]["name"], phase_description=PHASES[step]["description"])
     #parse_to_txt(response=response, output_file="gen_messages.txt")
+    #response_g = gen_partecipant_profile(PROMPT_PROFILE_GROOMER)
+    #response_v = gen_partecipant_profile(PROMPT_PROFILE_VICTIM)
+    #parse_to_txt(response_g, "test_generation/profiles.txt")
+    #parse_to_txt(response_v, "test_generation/profiles.txt")
+    desc_profile_g = "name: Matt, from Portland, Oregon, age 52, male; photographer; in freetime do Hiking, Playing the Guitar"
+    desc_profile_v = "name Erin from San Diego california, age 13, female; 'Seacrest Boulevard Middle School',in freetime do swimming, reading, drawing"
     start_time = time.time()
-    gen_chat()
+    gen_chat_complete(phases=PHASES,groomer_profile=desc_profile_g, victim_profile=desc_profile_v)
     tot_time = (time.time() - start_time) / 60
     print("--- %s minutes ---" % tot_time)

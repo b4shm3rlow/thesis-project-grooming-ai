@@ -5,7 +5,7 @@ def parse_to_txt(response, output_file):
     try:
         with open(output_file, "a") as file:
             file.write(str(response))
-            file.write(str("/n"))
+            #file.write(str("/n"))
         print(f"response has been written to {output_file}")
     except Exception as e:
         print(f"An error occurred: {e}")

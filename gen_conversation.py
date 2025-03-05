@@ -4,13 +4,19 @@ from langchain_community.llms.ollama import Ollama
 from langchain_ollama import OllamaLLM
 from ollama import chat, generate
 from ollama import Client
-from utils import parse_to_txt, validate_json
+from utils import parse_to_txt, validate_json, get_last_lines, convert_json_to_string
 from config import OLLAMA_URL, MODEL_3_2_UNC, MODEL_3_2_ABL, MODEL_3_1_8B, MODEL_3_1_8B_Q4KM_GUFF, MODEL_DEEPSEEK_Q4KM_GUFF, MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF
 from rag import load_knowledge
-from prompt import SYSTEM_PROMPT, RAG_PROMPT, OUTPUT_FORMAT, OUTPUT_JSON_SCHEMA
-import json
+from prompt import SYSTEM_PROMPT, RAG_PROMPT, OUTPUT_FORMAT, OUTPUT_JSON_SCHEMA,JSON_SCHEMA_G, JSON_SCHEMA_V, PROMPT_PROFILE_GROOMER
+import json, time
 
-def gen_partecipant_profile(prompt_profile_g, prompt_profile_v):
+def gen_partecipant_profile(prompt_profile):
+
+    if prompt_profile == PROMPT_PROFILE_GROOMER:
+        schema = JSON_SCHEMA_G
+    else:
+        schema = JSON_SCHEMA_V
+
 
     template = """Question: {question}
 
@@ -18,15 +24,16 @@ def gen_partecipant_profile(prompt_profile_g, prompt_profile_v):
 
     prompt = ChatPromptTemplate.from_template(template)
 
-    model = Ollama(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, system=SYSTEM_PROMPT, format='json')
+    model = Ollama(model=MODEL_3_2_ABL, base_url=OLLAMA_URL, system=SYSTEM_PROMPT, format='json')
 
     chain = prompt | model
 
-    response_g = chain.invoke({"question": prompt_profile_g})
-    response_v = chain.invoke({"question": prompt_profile_v})
+    while True:
 
+        response = chain.invoke({"question": prompt_profile})
+        if validate_json(json.loads(response), schema):
 
-    return response_g , response_v
+            return response
 
 def gen_chat_as_step(prompt_step_template, phase_name, step_key, chat_log_history, groomer_profile, victim_profile):
 
@@ -91,9 +98,17 @@ def gen_chat_complete(phases, groomer_profile=None, victim_profile=None):
     #generate chat for step
     for step_key, step_values in phases.items():
 
-        response_chat_step = gen_chat_as_step(prompt_step_template=step_values["prompt"], phase_name=step_values["name"], step_key=step_key, groomer_profile=groomer_profile, victim_profile=victim_profile, chat_log_history=chat_history_log)
+        chat_file = "test_generation/chat_12.txt"
+        gen_output = "test_generation/chat_12_output.txt"
 
-        chat_history_log += response_chat_step
-        parse_to_txt(chat_history_log, "test_llama/chat6.txt")
+        with open(chat_file, 'r', encoding='utf-8') as file:
+            chat_log_history = get_last_lines(chat_file)
+            print(f"chat_log_history: {chat_log_history}")
+
+        response = gen_chat_as_step(prompt_step_template=step_values["prompt"], phase_name=step_values["name"], step_key=step_key, chat_log_history=chat_log_history, groomer_profile=groomer_profile, victim_profile=victim_profile)
+        parse_to_txt(response, gen_output)
+        chat = convert_json_to_string(response)
+        parse_to_txt(chat, chat_file)
+        chat_history_log += chat
 
     return chat_history_log
