@@ -1,0 +1,5 @@
+ollama==0.4.6
+langchain
+langchain-ollama==0.2.2
+python-dotenv==1.0.1
+chromadb
