@@ -38,7 +38,16 @@ def get_last_lines(filepath, num_lines=20):
             
             offset *= 2  # Increase offset if needed
 
-def validate_json(output, schema):
+def parse_json(output):
+    """Try to parse JSON. Return None if invalid."""
+    try:
+        json.loads(output)  # Convert string to dict
+        return True
+    except json.JSONDecodeError as e:
+        print(f"JSON Decode Error: {e}")  # Log error
+        return False
+
+def validate_json(output, schema):    
     try:
         validate(instance=output, schema=schema)
         return True  # Valid JSON

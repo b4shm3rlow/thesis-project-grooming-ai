@@ -13,13 +13,13 @@ examples = {
 }
 
 
-def load_knowledge(step_key):
+def load_knowledge():
 
     '''embed_model = OllamaEmbeddings(
     model=MODEL_NAME,
     base_url=OLLAMA_URL
     )'''
-    model_name = "sentence-transformers/all-mpnet-base-v2"  
+    model_name = "sentence-transformers/all-mpnet-base-v2"
     model_kwargs = {'device': 'cpu'}  
     encode_kwargs = {'normalize_embeddings': False}
     embeddings = HuggingFaceEmbeddings(model_name=model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs)
@@ -28,17 +28,17 @@ def load_knowledge(step_key):
 
     for key, values in examples.items():
 
-        if key == step_key:
+        #if key == step_key:
 
-            file_path = values["file_path"]
-            if not os.path.exists(file_path):
-                raise FileNotFoundError(
-                    f"The file {file_path} does not exist. Please check the path."
-                )
+        file_path = values["file_path"]
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(
+                f"The file {file_path} does not exist. Please check the path."
+            )
 
-            with open(file_path, "r", encoding="utf-8") as file:
-                file_content = file.read()
-            # Check if the text file exists
+        with open(file_path, "r", encoding="utf-8") as file:
+            file_content = file.read()
+        # Check if the text file exists
 
 
     text = text_splitter.split_text(file_content)

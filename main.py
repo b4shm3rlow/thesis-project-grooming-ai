@@ -28,8 +28,8 @@ def gen_chat_phase():
     #desc_profile_v = f"name: {profile_v["name"]}, from {profile_v["provenience"]}, age {profile_v["age"]}, {profile_v["sex"]}; {profile_v["school"]}; in freetime do {profile_v["hobbies"]} "
     '''parse_to_txt(desc_profile_g, "profiles.txt")
     parse_to_txt(desc_profile_v, "profiles.txt")'''
-    desc_profile_g = "name: Matt, from Portland, Oregon, age 52, male; photographer; in freetime do Hiking, Playing the Guitar"
-    desc_profile_v = "name Erin from San Diego california, age 13, female; 'Seacrest Boulevard Middle School',in freetime do swimming, reading, drawing"
+    desc_profile_g = "name: Paul, from Tampa, florida, age 44, male; mechanic; in freetime do watch film, football"
+    desc_profile_v = "name Alice from San francisco california, age 14, female; Middle School,in freetime do read anime, play videogames, drawing"
 
     chat_file = "test_generation/chat_11.txt"
     gen_output = "test_generation/chat_11_output.txt"
@@ -53,8 +53,8 @@ if __name__ == "__main__":
     #response_v = gen_partecipant_profile(PROMPT_PROFILE_VICTIM)
     #parse_to_txt(response_g, "test_generation/profiles.txt")
     #parse_to_txt(response_v, "test_generation/profiles.txt")
-    desc_profile_g = "name: Matt, from Portland, Oregon, age 52, male; photographer; in freetime do Hiking, Playing the Guitar"
-    desc_profile_v = "name Erin from San Diego california, age 13, female; 'Seacrest Boulevard Middle School',in freetime do swimming, reading, drawing"
+    desc_profile_g = "name: carl, from liverpool, UK, age 49, male"
+    desc_profile_v = "name asya from brentford UK, age 13, female"
     start_time = time.time()
     gen_chat_complete(phases=PHASES,groomer_profile=desc_profile_g, victim_profile=desc_profile_v)
     tot_time = (time.time() - start_time) / 60
