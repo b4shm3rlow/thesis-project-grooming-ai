@@ -11,8 +11,8 @@ from prompt import TARGETING, GAINING_TRUST, FULLFILLING_NEEDS, ISOLATION, SEXUA
 import time
 
 PHASES = {
-    "step_1": {"name": "Targeting", "prompt": PROMPT_STEP_1, "description": TARGETING},
-    "step_2": {"name": "Gaining trust and access", "prompt": PROMPT_STEP_2, "description": GAINING_TRUST},
+    "step_1": {"name": "Targeting and Gaining Trust", "prompt": PROMPT_STEP_1, "description": TARGETING},
+    #"step_2": {"name": "Gaining trust and access", "prompt": PROMPT_STEP_2, "description": GAINING_TRUST},
     "step_3": {"name": "Fullfilling Needs", "prompt": PROMPT_STEP_3, "description": FULLFILLING_NEEDS},
     "step_4": {"name": "Isolation", "prompt": PROMPT_STEP_4, "description": ISOLATION},
     "step_5": {"name": "Sexualizing the relationship", "prompt": PROMPT_STEP_5, "description": SEXUALIZING_THE_RELATIONSHIP_AND_ABUSE},

@@ -24,7 +24,7 @@ def gen_partecipant_profile(prompt_profile):
 
     prompt = ChatPromptTemplate.from_template(template)
 
-    model = Ollama(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, system=SYSTEM_PROMPT, format='json')
+    model = OllamaLLM(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, system=SYSTEM_PROMPT, format='json')
 
     chain = prompt | model
 
@@ -37,7 +37,7 @@ def gen_partecipant_profile(prompt_profile):
 
 def gen_chat_as_step(prompt_step_template, phase_name, step_key, chat_log_history, groomer_profile, victim_profile, retriever):
 
-    llm = Ollama(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, system=SYSTEM_PROMPT, format='json')
+    llm = OllamaLLM(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, temperature=0.6,num_ctx=8192, system=SYSTEM_PROMPT, format='json')
 
     #rag_template = ChatPromptTemplate.from_template(RAG_PROMPT)
     #rag_prompt = rag_template.format(phase_name=phase_name)
