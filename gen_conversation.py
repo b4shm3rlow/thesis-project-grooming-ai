@@ -24,7 +24,7 @@ def gen_partecipant_profile(prompt_profile):
 
     prompt = ChatPromptTemplate.from_template(template)
 
-    model = OllamaLLM(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, system=SYSTEM_PROMPT, format='json')
+    model = Ollama(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, system=SYSTEM_PROMPT, format='json')
 
     chain = prompt | model
 
@@ -37,7 +37,7 @@ def gen_partecipant_profile(prompt_profile):
 
 def gen_chat_as_step(prompt_step_template, phase_name, step_key, chat_log_history, groomer_profile, victim_profile, retriever):
 
-    llm = OllamaLLM(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, temperature=0.6,num_ctx=8192, system=SYSTEM_PROMPT, format='json')
+    llm = Ollama(model=MODEL_DEEPSEEK_LLAMA_IQ4XS_GUFF, base_url=OLLAMA_URL, temperature=0.8,num_ctx=8192, system=SYSTEM_PROMPT, format='json')
 
     #rag_template = ChatPromptTemplate.from_template(RAG_PROMPT)
     #rag_prompt = rag_template.format(phase_name=phase_name)
@@ -79,7 +79,7 @@ def gen_chat_as_step(prompt_step_template, phase_name, step_key, chat_log_histor
     
                 return answer
 
-def gen_chat_complete(phases, groomer_profile=None, victim_profile=None):
+def gen_chat_complete(phases, chat_file, gen_output, groomer_profile=None, victim_profile=None):
 
     #generate profile humans
     #response_groomer = gen_partecipant_profile(PROMPT_PROFILE_GROOMER)
@@ -92,9 +92,6 @@ def gen_chat_complete(phases, groomer_profile=None, victim_profile=None):
     chat_history_log = ""
     #generate chat for step
     for step_key, step_values in phases.items():
-
-        chat_file = "/home/jovyan/projects/thesis-project-grooming-ai/output/chat_5.txt"
-        gen_output = "/home/jovyan/projects/thesis-project-grooming-ai/output/output_5.txt"
 
         vector_store = load_knowledge()
         retriever = vector_store.as_retriever()

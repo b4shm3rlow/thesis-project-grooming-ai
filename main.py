@@ -46,6 +46,9 @@ def gen_chat_phase():
 
 
 if __name__ == "__main__":
+
+    chat_file = "/home/jovyan/projects/thesis-project-grooming-ai/output/chat_5.txt"
+    gen_output = "/home/jovyan/projects/thesis-project-grooming-ai/output/output_5.txt"
     #step = "step_1"
     #response = gen_messages_phase(phase_name=PHASES[step]["name"], phase_description=PHASES[step]["description"])
     #parse_to_txt(response=response, output_file="gen_messages.txt")
@@ -56,6 +59,6 @@ if __name__ == "__main__":
     desc_profile_g = "name: carl, from liverpool, UK, age 49, male"
     desc_profile_v = "name asya from brentford UK, age 13, female"
     start_time = time.time()
-    gen_chat_complete(phases=PHASES,groomer_profile=desc_profile_g, victim_profile=desc_profile_v)
+    gen_chat_complete(phases=PHASES,chat_file=chat_file, gen_output=gen_output, groomer_profile=desc_profile_g, victim_profile=desc_profile_v)
     tot_time = (time.time() - start_time) / 60
     print("--- %s minutes ---" % tot_time)
