@@ -177,3 +177,5 @@ cython_debug/
 /test_generation
 /finetuning
 /data
+/data_sintetici_csv
+/dataset

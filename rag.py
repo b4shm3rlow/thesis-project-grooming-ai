@@ -4,12 +4,12 @@ from langchain_community.vectorstores import Chroma
 import os
 
 examples = {
-    "step_1": {"file_path": "rag/targeting_examples.txt"},
-    "step_2": {"file_path": "rag/gaining_trust_access_examples.txt"},
+    "step_1": {"file_path": "rag/targeting_and_gaining_trust_examples.txt"},
+    #"step_2": {"file_path": "rag/gaining_trust_access_examples.txt"},
     "step_3": {"file_path": "rag/fullfilling_needs_examples.txt"},
     "step_4": {"file_path": "rag/isolation_examples.txt"},
     "step_5": {"file_path": "rag/sexualize_relationship_abuse_example.txt"},
-    "step_6": {"file_path": "rag/isolation_examples.txt"},
+    "step_6": {"file_path": "rag/control_examples.txt"},
 }
 
 
@@ -41,8 +41,8 @@ def load_knowledge():
         # Check if the text file exists
 
 
-    text = text_splitter.split_text(file_content)
-    vector_store = Chroma.from_texts(text, embeddings)
+        text = text_splitter.split_text(file_content)
+        vector_store = Chroma.from_texts(text, embeddings)
 
     return vector_store
 

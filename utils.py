@@ -1,11 +1,12 @@
 import json
 from jsonschema import validate, ValidationError
 
-def parse_to_txt(response, output_file):
+def parse_to_txt(response, output_file, phase_name):
     try:
         with open(output_file, "a") as file:
+            file.write(str(phase_name))
             file.write(str(response))
-            #file.write(str("/n"))
+            file.write(str("/n"))
         print(f"response has been written to {output_file}")
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -14,7 +15,7 @@ def convert_json_to_string(json_data):
     data = json.loads(json_data)
     output = ""
     for message in data["messages"]:
-        output += f"{message['author']}: {message['text']}\n"
+        output += f"{message['author']}|{message['timestamp']['date']}:{message['timestamp']['time']}|{message['text']}|{message['label']} \n"
     return output
 
 def get_last_lines(filepath, num_lines=20):
