@@ -176,3 +176,4 @@ cython_debug/
 #folders
 /test_generation
 /finetuning
+/data
